@@ -14,7 +14,7 @@ public class WalletApp extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(WalletApp.class, args);
-        LOGGER.debug("Hola mundo desde wallet app");
+        LOGGER.debug("Hola mundo desde wallet appp");
     }
 
 
