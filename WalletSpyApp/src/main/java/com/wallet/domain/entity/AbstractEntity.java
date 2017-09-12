@@ -1,4 +1,4 @@
-package com.wallet.entity;
+package com.wallet.domain.entity;
 
 import org.springframework.data.annotation.Id;
 
@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by EBR3556 on 12/09/2017.
  */
-public class AbstractEntity implements Serializable{
+public abstract class AbstractEntity implements Serializable{
 
     @Id
     private String id;

@@ -1,9 +1,9 @@
-package com.wallet.entity;
+package com.wallet.domain.entity.document;
 
 /**
  * Created by EBR3556 on 12/09/2017.
  */
-public class AbstractLabeledEntity extends AbstractEntity {
+public class LabelledDocument extends AbstractDocument {
 
     private String label;
 
