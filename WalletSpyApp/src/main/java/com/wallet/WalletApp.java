@@ -1,3 +1,5 @@
+package com.wallet;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
