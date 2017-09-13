@@ -5,16 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.6.RELEASE</version>
-        <relativePath/>
+        <artifactId>wallet-spy</artifactId>
+        <groupId>org.wallet</groupId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.bravo</groupId>
     <artifactId>wallet-spy-app</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -32,19 +29,6 @@
             <artifactId>spring-data-mongodb</artifactId>
             <version>1.10.7.RELEASE</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.9.0</version>
-        </dependency>
-        <!---->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.9.0</version>
-        </dependency>
-        <!-- MongoDB-->
     </dependencies>
 
     <build>
@@ -65,5 +49,4 @@
             </snapshots>
         </repository>
     </repositories>
-
 </project>
