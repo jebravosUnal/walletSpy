@@ -1,4 +1,4 @@
 /.idea/
 /target/
 *.iml
-/walletSpyApp/*.iml
+/walletSpyApp/walletSpyApp.iml
