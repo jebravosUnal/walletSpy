@@ -16,9 +16,15 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
+        <wallet.version>0.0.1-SNAPSHOT</wallet.version>
     </properties>
 
     <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>org.wallet</groupId>-->
+            <!--<artifactId>wallet-commons</artifactId>-->
+            <!--<version>${wallet.version}</version>-->
+        <!--</dependency>-->
         <!---->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -29,6 +35,7 @@
             <artifactId>spring-data-mongodb</artifactId>
             <version>1.10.7.RELEASE</version>
         </dependency>
+
     </dependencies>
 
     <build>
