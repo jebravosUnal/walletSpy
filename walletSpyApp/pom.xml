@@ -11,12 +11,12 @@
     </parent>
 
     <artifactId>wallet-spy-app</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <wallet.version>0.0.1-SNAPSHOT</wallet.version>
+        <wallet.version>1.0-SNAPSHOT</wallet.version>
     </properties>
 
     <dependencies>
@@ -25,11 +25,16 @@
             <!--<artifactId>wallet-commons</artifactId>-->
             <!--<version>${wallet.version}</version>-->
         <!--</dependency>-->
-        <!---->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.wallet</groupId>
+            <artifactId>wallet-loader</artifactId>
+            <version>${wallet.version}</version>
         </dependency>
+        <!---->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-web</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
