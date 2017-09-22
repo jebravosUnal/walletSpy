@@ -25,6 +25,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>1.10.7.RELEASE</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
@@ -60,6 +66,20 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
+        </dependency>
+        <!-- scope provided because the processor is only needed at compile time-->
+        <dependency>
+            <groupId>fr.xebia.extras</groupId>
+            <artifactId>selma-processor</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- This is the only real dependency you will have in your binaries -->
+        <dependency>
+            <groupId>fr.xebia.extras</groupId>
+            <artifactId>selma</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 </project>

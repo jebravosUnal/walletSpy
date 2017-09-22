@@ -1,6 +1,7 @@
 package com.wallet.entity;
 
-import com.wallet.entity.document.Category;
+import com.wallet.document.Account;
+import com.wallet.document.Category;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ public class Transaction extends LabeledEntity {
 
     private LocalDateTime date;
     private Category category;
+    private Account account;
     private BigDecimal amount;
     private String userId;
 

@@ -1,4 +1,4 @@
-package com.wallet.entity.document;
+package com.wallet.document;
 
 /**
  * Created by EBR3556 on 12/09/2017.

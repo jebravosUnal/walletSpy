@@ -1,6 +1,6 @@
 package com.wallet.service.impl;
 
-import com.wallet.dto.CategoryDto;
+import com.wallet.document.Category;
 import com.wallet.dto.TransactionDto;
 import com.wallet.exceptions.TransactionsLoadException;
 import com.wallet.service.TransactionLoader;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -52,21 +51,23 @@ public class BnpMesComptesLoader implements TransactionLoader {
     @Override
     public List<TransactionDto> loadAndGetTransactions() throws TransactionsLoadException {
         LOGGER.info("Hello from bnp loader...");
-        List<TransactionDto> transactionsReaded = newArrayList();
+        List<TransactionDto> transactionsRead = newArrayList();
         //
         ExcelReader reader = new ExcelReader(filesPath + FILE_NAME);
+
         List<Map<Integer, String>> transactionsFileContent = reader.getAllRowsContent(TRANSACTIONS_FIRST_ROW_INDEX);
         transactionsFileContent.forEach(content -> {
             if(content != null){
                 TransactionDto transformedTransaction = fromContentMapToTransactionDto(content);
                 if(transformedTransaction != null){
-                    transactionsReaded.add(transformedTransaction);
+                    transactionsRead.add(transformedTransaction);
                 }
             }
         });
 
+        reader.close();
         //
-        return transactionsReaded;
+        return transactionsRead;
     }
 
     private TransactionDto fromContentMapToTransactionDto(Map<Integer, String> contentMap){
@@ -78,9 +79,9 @@ public class BnpMesComptesLoader implements TransactionLoader {
         LocalDateTime transactionDate = getLocalDateTimeFromString(contentMap.get(DATE_COLUMN_INDEX), DATE_PATTERN);
         transactionDto.setDate(transactionDate);
 
-        CategoryDto categoryDto = new CategoryDto();
-        categoryDto.setLabel(contentMap.get(CATEGORY_COLUMN_INDEX));
-        transactionDto.setCategory(categoryDto);
+        Category category = new Category();
+        category.setLabel(contentMap.get(CATEGORY_COLUMN_INDEX));
+        transactionDto.setCategory(category);
 
         transactionDto.setLabel(contentMap.get(LABEL_COLUMN_INDEX));
 

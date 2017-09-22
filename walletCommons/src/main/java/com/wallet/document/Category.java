@@ -1,4 +1,4 @@
-package com.wallet.entity.document;
+package com.wallet.document;
 
 
 import org.springframework.data.mongodb.core.mapping.Document;

@@ -1,5 +1,8 @@
 package com.wallet.dto;
 
+import com.wallet.document.Account;
+import com.wallet.document.Category;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -9,7 +12,8 @@ import java.time.LocalDateTime;
 public class TransactionDto extends LabelledDto {
 
     private LocalDateTime date;
-    private CategoryDto category;
+    private Category category;
+    private String accountName;
     private BigDecimal amount;
     private String userId;
 
@@ -21,11 +25,11 @@ public class TransactionDto extends LabelledDto {
         this.date = date;
     }
 
-    public CategoryDto getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryDto category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -43,5 +47,13 @@ public class TransactionDto extends LabelledDto {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 }
