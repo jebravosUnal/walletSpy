@@ -85,8 +85,8 @@ public class BnpMesComptesLoader implements TransactionLoader {
 
         transactionDto.setLabel(contentMap.get(LABEL_COLUMN_INDEX));
 
-        BigDecimal transactionAmout = new BigDecimal(contentMap.get(AMOUNT_COLUMN_INDEX));
-        transactionDto.setAmount(transactionAmout);
+        BigDecimal transactionAmount = new BigDecimal(contentMap.get(AMOUNT_COLUMN_INDEX));
+        transactionDto.setAmount(transactionAmount);
 
         return transactionDto;
     }
