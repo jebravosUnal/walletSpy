@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>wallet-spy-app</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,16 +20,16 @@
     </properties>
 
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>org.wallet</groupId>-->
-            <!--<artifactId>wallet-commons</artifactId>-->
-            <!--<version>${wallet.version}</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.wallet</groupId>
-            <artifactId>wallet-loader</artifactId>
+            <artifactId>wallet-commons</artifactId>
             <version>${wallet.version}</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.wallet</groupId>-->
+            <!--<artifactId>wallet-loader</artifactId>-->
+            <!--<version>${wallet.version}</version>-->
+        <!--</dependency>-->
         <!---->
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->

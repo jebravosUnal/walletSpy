@@ -8,6 +8,7 @@
         <module>walletCommons</module>
         <module>walletloader</module>
         <module>commandLineApp</module>
+        <module>walletapi</module>
     </modules>
 
     <parent>
@@ -17,9 +18,17 @@
         <relativePath/>
     </parent>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <wallet.version>1.0-SNAPSHOT</wallet.version>
+    </properties>
+
+
     <groupId>org.wallet</groupId>
     <artifactId>wallet-spy</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <!--<version>1.0-SNAPSHOT</version>-->
+    <version>${wallet.version}</version>
     <packaging>pom</packaging>
 
     <profiles>

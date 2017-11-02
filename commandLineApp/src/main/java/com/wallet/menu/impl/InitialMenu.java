@@ -1,5 +1,6 @@
 package com.wallet.menu.impl;
 
+import com.wallet.exceptions.WalletException;
 import com.wallet.menu.Menu;
 
 import java.io.BufferedReader;
@@ -17,7 +18,7 @@ public class InitialMenu extends Menu {
     }
 
     @Override
-    public void printMenu() throws IOException {
+    public void printMenu() throws IOException, WalletException {
         System.out.println("--------------------------------------------------------");
         System.out.println("---------------------------MENU-------------------------");
         System.out.println("-- 1. print Hola mundo");
@@ -29,7 +30,7 @@ public class InitialMenu extends Menu {
     }
 
     @Override
-    public void handleInput(String input) throws IOException {
+    public void handleInput(String input) throws IOException, WalletException {
         switch (input) {
             case PRINT_HELLO_WORLD:
                 printHelloWorld();
@@ -44,7 +45,7 @@ public class InitialMenu extends Menu {
         }
     }
 
-    private void printHelloWorld() throws IOException {
+    private void printHelloWorld() throws IOException, WalletException {
         System.out.println("Hello World!!!");
         printMenu();
 

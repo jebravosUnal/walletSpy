@@ -4,9 +4,11 @@ import com.wallet.document.Category;
 import com.wallet.dto.TransactionDto;
 import com.wallet.exceptions.TransactionsLoadException;
 import com.wallet.service.TransactionLoader;
+import com.wallet.service.TransactionService;
 import com.wallet.utils.ExcelReader;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -39,21 +41,24 @@ public class BnpMesComptesLoader implements TransactionLoader {
     //TODO for testing only
     private static String FILE_NAME = "export_12_09_2017_10_34_07.xls";
 
-    @Value("${wallet.file.repository}")
-    private String filesPath;
+//    @Value("${wallet.file.repository}")
+    private final static String FILES_PATH = "C:/Users/ebr3556/Desktop/Esteban/Documents/Personnel/transactiones/";
 
+    @Autowired
+    private TransactionService transactionService;
 
     @Override
     public void loadTransactions() throws TransactionsLoadException {
-        LOGGER.debug("Hello from bnp loader...");
+        LOGGER.warn("Not implemented...");
     }
 
     @Override
     public List<TransactionDto> loadAndGetTransactions() throws TransactionsLoadException {
-        LOGGER.info("Hello from bnp loader...");
+        LOGGER.info("Loading...");
         List<TransactionDto> transactionsRead = newArrayList();
+        List<TransactionDto> transactionsLoaded = newArrayList();
         //
-        ExcelReader reader = new ExcelReader(filesPath + FILE_NAME);
+        ExcelReader reader = new ExcelReader(FILES_PATH + FILE_NAME);
 
         List<Map<Integer, String>> transactionsFileContent = reader.getAllRowsContent(TRANSACTIONS_FIRST_ROW_INDEX);
         transactionsFileContent.forEach(content -> {
@@ -61,13 +66,15 @@ public class BnpMesComptesLoader implements TransactionLoader {
                 TransactionDto transformedTransaction = fromContentMapToTransactionDto(content);
                 if(transformedTransaction != null){
                     transactionsRead.add(transformedTransaction);
+                    transactionsLoaded.add(transactionService.insert(transformedTransaction));
                 }
             }
         });
 
         reader.close();
         //
-        return transactionsRead;
+        return transactionsLoaded;
+//        return transactionsRead;
     }
 
     private TransactionDto fromContentMapToTransactionDto(Map<Integer, String> contentMap){

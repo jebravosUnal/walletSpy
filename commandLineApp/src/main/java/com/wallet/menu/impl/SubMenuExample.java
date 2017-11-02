@@ -1,5 +1,8 @@
 package com.wallet.menu.impl;
 
+import com.wallet.exceptions.TransactionLoaderNotImplementedException;
+import com.wallet.exceptions.TransactionsLoadException;
+import com.wallet.exceptions.WalletException;
 import com.wallet.menu.Menu;
 import com.wallet.menu.SubMenu;
 
@@ -17,7 +20,7 @@ public class SubMenuExample extends SubMenu {
     }
 
     @Override
-    public void printMenu() throws IOException {
+    public void printMenu() throws IOException, WalletException {
         System.out.println("--------------------------------------------------------");
         System.out.println("------------------------SUBMENU-------------------------");
         System.out.println("-- 1. print Hola mundo from submenu");
@@ -29,7 +32,7 @@ public class SubMenuExample extends SubMenu {
     }
 
     @Override
-    protected void handleInput(String input) throws IOException {
+    protected void handleInput(String input) throws IOException, WalletException {
         switch (input) {
             case PRINT_HELLO_WORLD:
                 printHelloWorld();
@@ -45,7 +48,7 @@ public class SubMenuExample extends SubMenu {
         }
     }
 
-    private void printHelloWorld() throws IOException {
+    private void printHelloWorld() throws IOException, WalletException {
         System.out.println("Hello World from submenu!!!");
         printMenu();
     }

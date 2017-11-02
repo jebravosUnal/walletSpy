@@ -1,4 +1,4 @@
-package org.jebs.util;
+package com.wallet.utils;
 
 import java.util.Collection;
 

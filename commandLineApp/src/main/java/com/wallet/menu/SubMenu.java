@@ -1,5 +1,7 @@
 package com.wallet.menu;
 
+import com.wallet.exceptions.WalletException;
+
 import java.io.IOException;
 
 public abstract class SubMenu extends Menu {
@@ -10,7 +12,7 @@ public abstract class SubMenu extends Menu {
         this.previousMenu = previousMenu;
     }
 
-    protected void printPreviousMenu() throws IOException {
+    protected void printPreviousMenu() throws IOException, WalletException {
         previousMenu.printMenu();
     }
 }

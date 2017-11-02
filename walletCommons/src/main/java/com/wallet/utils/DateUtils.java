@@ -2,7 +2,10 @@ package com.wallet.utils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalUnit;
+import java.util.Date;
 
 /**
  * Created by EBR3556 on 21/09/2017.
@@ -18,7 +21,7 @@ public class DateUtils {
         DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern(pattern);
         LocalDate ld = LocalDate.parse(stringDate, DATEFORMATTER);
         LocalDateTime ldt = LocalDateTime.of(ld, LocalDateTime.now().toLocalTime());
-        System.out.println(ldt);
+//        System.out.println(ldt);
         return ldt;
     }
 
