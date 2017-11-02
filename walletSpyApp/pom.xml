@@ -22,25 +22,71 @@
     <dependencies>
         <!--<dependency>-->
             <!--<groupId>org.wallet</groupId>-->
-            <!--<artifactId>wallet-commons</artifactId>-->
+            <!--<artifactId>wallet-loader</artifactId>-->
             <!--<version>${wallet.version}</version>-->
         <!--</dependency>-->
+
         <dependency>
-            <groupId>org.wallet</groupId>
-            <artifactId>wallet-loader</artifactId>
-            <version>${wallet.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>1.10.7.RELEASE</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>23.0</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.9.0</version>
         </dependency>
         <!---->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-web</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.data</groupId>-->
-            <!--<artifactId>spring-data-mongodb</artifactId>-->
-            <!--<version>1.10.7.RELEASE</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.17</version>
+        </dependency>
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/junit/junit &ndash;&gt;-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+        </dependency>
+        <!-- scope provided because the processor is only needed at compile time-->
+        <dependency>
+            <groupId>fr.xebia.extras</groupId>
+            <artifactId>selma-processor</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
 
+        <!-- This is the only real dependency you will have in your binaries -->
+        <dependency>
+            <groupId>fr.xebia.extras</groupId>
+            <artifactId>selma</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

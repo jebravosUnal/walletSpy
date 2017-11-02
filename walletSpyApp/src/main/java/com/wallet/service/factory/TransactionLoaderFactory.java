@@ -2,7 +2,6 @@ package com.wallet.service.factory;
 
 import com.wallet.exceptions.TransactionLoaderNotImplementedException;
 import com.wallet.service.TransactionLoader;
-import com.wallet.service.factory.impl.TransactionLoaderFactoryImpl;
 import com.wallet.service.factory.impl.TransactionLoaderFactoryImpl.LoaderType;
 
 /**

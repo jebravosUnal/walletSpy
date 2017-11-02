@@ -4,7 +4,6 @@ import com.wallet.dto.TransactionDto;
 import com.wallet.entity.Transaction;
 import fr.xebia.extras.selma.Field;
 import fr.xebia.extras.selma.Mapper;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 
 /**
  * Created by EBR3556 on 22/09/2017.

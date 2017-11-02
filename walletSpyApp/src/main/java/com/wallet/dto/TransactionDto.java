@@ -1,6 +1,5 @@
 package com.wallet.dto;
 
-import com.wallet.document.Account;
 import com.wallet.document.Category;
 
 import java.math.BigDecimal;

@@ -1,5 +1,6 @@
 package com.wallet.entity;
 
+import com.google.common.collect.Lists;
 import com.wallet.document.Account;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class User extends NamedEntity {
         if(accounts == null){
             return newArrayList();
         }
-        return newArrayList(accounts);
+        return Lists.newArrayList(accounts);
     }
 
     private void setAccounts(List<Account> accounts) {
