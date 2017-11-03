@@ -1,8 +1,8 @@
 package com.wallet.service;
 
-import com.wallet.dto.TransactionDto;
 import com.wallet.entity.Transaction;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -19,19 +19,27 @@ public interface TransactionService {
 
     /**
      *
-     * @param toInsert
+     * @param from
+     * @param to
      * @return
      */
-    TransactionDto insert(TransactionDto toInsert);
-
-    Transaction insert(Transaction toInsert);
+    List<Transaction> findTransactionsInDateRange(LocalDate from, LocalDate to);
 
     /**
      *
      * @param toInsert
      * @return
      */
-    List<TransactionDto> insert(List<TransactionDto> toInsert);
+//    TransactionDto insert(TransactionDto toInsert);
+
+    Transaction insert(Transaction toInsert);
+
+//    /**
+//     *
+//     * @param toInsert
+//     * @return
+//     */
+//    List<TransactionDto> insert(List<TransactionDto> toInsert);
 
     void insertFakeTransaction();
 

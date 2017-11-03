@@ -9,8 +9,10 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.newLinkedList;
@@ -27,6 +29,27 @@ public class FakeRepository implements PagingAndSortingRepository<Transaction, S
     private Predicate<Transaction> isId(String id) {
         return transaction -> transaction.getId().equals(id);
     }
+
+    private Predicate<Transaction> isDateEqualOrAfterThan(LocalDate date) {
+        return transaction -> transaction.getDate().toLocalDate().isEqual(date) || transaction.getDate().toLocalDate().isAfter(date) ;
+    }
+
+    private Predicate<Transaction> isDateEqualOrBeforeThan(LocalDate date) {
+        return transaction -> transaction.getDate().toLocalDate().isEqual(date) || transaction.getDate().toLocalDate().isBefore(date) ;
+    }
+
+    private Predicate<Transaction> isDateBetweenRange(LocalDate from, LocalDate to) {
+//        return transaction -> transaction.getDate().toLocalDate().isEqual(from) || transaction.getDate().toLocalDate().isAfter(from)
+//                 && transaction.getDate().toLocalDate().isEqual(to) || transaction.getDate().toLocalDate().isBefore(to);
+
+        return isDateEqualOrAfterThan(from).and(isDateEqualOrBeforeThan(to));
+
+    }
+
+    public List<Transaction> findTransactionsByDateIsBetween(LocalDate from, LocalDate to){
+        return transactionsCollections.stream().filter(isDateBetweenRange(from, to)).collect(Collectors.toList());
+    }
+
 
     //    @Override
     public Transaction findByLabel(String label) {

@@ -18,8 +18,12 @@ public abstract class Menu {
     protected abstract void handleInput(String input) throws IOException, WalletException;
 
     protected void printNotValidOption() throws IOException, WalletException {
-        System.out.println("Not a valid option!! Select another one");
+        println("Not a valid option!! Select another one");
         printMenu();
+    }
+
+    public void println(String line){
+        System.out.println(line);
     }
 
     public void exit(int status){

@@ -12,9 +12,10 @@ import java.util.Date;
  */
 public class DateUtils {
 
+    public static String DEFAULT_DATE_PATTERN = "yyyy-MM-dd";
 
     public static LocalDateTime getLocalDateTimeFromString(String stringDate){
-        return getLocalDateTimeFromString(stringDate, "yyyy-MM-dd");
+        return getLocalDateTimeFromString(stringDate, DEFAULT_DATE_PATTERN);
     }
 
     public static LocalDateTime getLocalDateTimeFromString(String stringDate, String pattern){
@@ -23,6 +24,14 @@ public class DateUtils {
         LocalDateTime ldt = LocalDateTime.of(ld, LocalDateTime.now().toLocalTime());
 //        System.out.println(ldt);
         return ldt;
+    }
+
+    public static LocalDate getLocalDateFromString(String stringDate){
+        return getLocalDateFromString(stringDate, DEFAULT_DATE_PATTERN);
+    }
+
+    public static LocalDate getLocalDateFromString(String stringDate, String pattern){
+        return getLocalDateTimeFromString(stringDate, pattern).toLocalDate();
     }
 
     public static Date getDateFromLocalDateTime(LocalDateTime localDateTime){
@@ -34,10 +43,10 @@ public class DateUtils {
     }
 
     public static LocalDateTime getLocalDateTimeFromDate(Date date){
-        return getLocalDateTimeFomDate(date, null);
+        return getLocalDateTimeFromDate(date, null);
     }
 
-    public static LocalDateTime getLocalDateTimeFomDate(Date date, ZoneId zoneId){
+    public static LocalDateTime getLocalDateTimeFromDate(Date date, ZoneId zoneId){
         if(date == null){
             throw new IllegalArgumentException("date should not be null");
         }

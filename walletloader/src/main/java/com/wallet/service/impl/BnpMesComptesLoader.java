@@ -1,7 +1,6 @@
 package com.wallet.service.impl;
 
 import com.wallet.document.Category;
-import com.wallet.dto.TransactionDto;
 import com.wallet.entity.Transaction;
 import com.wallet.exceptions.TransactionsLoadException;
 import com.wallet.service.TransactionLoader;
@@ -10,7 +9,6 @@ import com.wallet.utils.ExcelReader;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -84,26 +82,26 @@ public class BnpMesComptesLoader implements TransactionLoader {
 //        return transactionsRead;
     }
 
-    private TransactionDto fromContentMapToTransactionDto(Map<Integer, String> contentMap){
-        TransactionDto transactionDto = new TransactionDto();
-        if(contentMap.isEmpty()){
-            return null;
-        }
-
-        LocalDateTime transactionDate = getLocalDateTimeFromString(contentMap.get(DATE_COLUMN_INDEX), DATE_PATTERN);
-        transactionDto.setDate(transactionDate);
-
-        Category category = new Category();
-        category.setLabel(contentMap.get(CATEGORY_COLUMN_INDEX));
-        transactionDto.setCategory(category);
-
-        transactionDto.setLabel(contentMap.get(LABEL_COLUMN_INDEX));
-
-        BigDecimal transactionAmount = new BigDecimal(contentMap.get(AMOUNT_COLUMN_INDEX));
-        transactionDto.setAmount(transactionAmount);
-
-        return transactionDto;
-    }
+//    private TransactionDto fromContentMapToTransactionDto(Map<Integer, String> contentMap){
+//        TransactionDto transactionDto = new TransactionDto();
+//        if(contentMap.isEmpty()){
+//            return null;
+//        }
+//
+//        LocalDateTime transactionDate = getLocalDateTimeFromString(contentMap.get(DATE_COLUMN_INDEX), DATE_PATTERN);
+//        transactionDto.setDate(transactionDate);
+//
+//        Category category = new Category();
+//        category.setLabel(contentMap.get(CATEGORY_COLUMN_INDEX));
+//        transactionDto.setCategory(category);
+//
+//        transactionDto.setLabel(contentMap.get(LABEL_COLUMN_INDEX));
+//
+//        BigDecimal transactionAmount = new BigDecimal(contentMap.get(AMOUNT_COLUMN_INDEX));
+//        transactionDto.setAmount(transactionAmount);
+//
+//        return transactionDto;
+//    }
 
     private Transaction fromContentMapToTransaction(Map<Integer, String> contentMap){
         Transaction transaction = new Transaction();
