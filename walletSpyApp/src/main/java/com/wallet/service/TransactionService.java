@@ -24,6 +24,8 @@ public interface TransactionService {
      */
     TransactionDto insert(TransactionDto toInsert);
 
+    Transaction insert(Transaction toInsert);
+
     /**
      *
      * @param toInsert

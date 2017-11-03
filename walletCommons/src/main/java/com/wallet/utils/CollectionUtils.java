@@ -11,4 +11,5 @@ public class CollectionUtils {
     public static Boolean isEmpty(Collection<Object> collection){
         return collection != null || collection.isEmpty();
     }
+
 }

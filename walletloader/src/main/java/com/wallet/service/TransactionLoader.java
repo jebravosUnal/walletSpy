@@ -1,6 +1,7 @@
 package com.wallet.service;
 
 import com.wallet.dto.TransactionDto;
+import com.wallet.entity.Transaction;
 import com.wallet.exceptions.TransactionsLoadException;
 
 import java.util.List;
@@ -12,5 +13,6 @@ public interface TransactionLoader {
 
     void loadTransactions() throws TransactionsLoadException;
 
-    List<TransactionDto> loadAndGetTransactions() throws TransactionsLoadException;
+    List<Transaction> loadAndGetTransactions() throws TransactionsLoadException;
+//    List<TransactionDto> loadAndGetTransactions() throws TransactionsLoadException;
 }

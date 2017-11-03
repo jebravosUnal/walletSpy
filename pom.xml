@@ -28,7 +28,8 @@
     <groupId>org.wallet</groupId>
     <artifactId>wallet-spy</artifactId>
     <!--<version>1.0-SNAPSHOT</version>-->
-    <version>${wallet.version}</version>
+    <version>1.0-SNAPSHOT</version>
+    <!--<version>${wallet.version}</version>-->
     <packaging>pom</packaging>
 
     <profiles>

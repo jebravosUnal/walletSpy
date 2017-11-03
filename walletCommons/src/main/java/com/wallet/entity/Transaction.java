@@ -61,4 +61,13 @@ public class Transaction extends LabeledEntity {
                 + "}";
     }
 
+    public String getTransactionResume() {
+        return "" + (this.getId() != null ? " id : " + this.getId() + " - " : "")
+                + (this.getDate() != null ? " date : " + this.getDate() + " - " : "")
+                + (this.getLabel() != null ? " label : " + this.getLabel() + " - " : "")
+                + (this.getAmount() != null ? " amount : " + this.getAmount() + " - " : "")
+                + (this.getCategory() != null ? " category : " + this.getCategory().getLabel() + " - " : "")
+                + (this.getUserId() != null ? " category : " + this.getUserId() + " - " : "");
+    }
+
 }

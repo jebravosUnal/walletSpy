@@ -2,6 +2,7 @@ package com.wallet.repository;
 
 import com.wallet.entity.Transaction;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 
 /**
  * Created by EBR3556 on 12/09/2017.

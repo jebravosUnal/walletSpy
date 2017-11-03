@@ -3,6 +3,7 @@ package com.wallet.services.impl;
 import com.wallet.exceptions.WalletException;
 import com.wallet.menu.Menu;
 import com.wallet.menu.impl.WalletMenu;
+import com.wallet.service.TransactionService;
 import com.wallet.service.factory.TransactionLoaderFactory;
 import com.wallet.services.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,17 @@ public class MenuServiceImpl implements MenuService {
     @Autowired
     private TransactionLoaderFactory transactionLoaderFactory;
 
+    @Autowired
+    private TransactionService transactionService;
+
     @Override
     public void printMenu() throws IOException, WalletException {
-        Menu walletMenu  = new WalletMenu(transactionLoaderFactory);
+
+        Menu walletMenu  = new WalletMenu.WalletMenuBuilder()
+                .setTransactionLoaderFactory(transactionLoaderFactory)
+                .setTransactionService(transactionService)
+                .build();
+//        Menu walletMenu  = new WalletMenu(transactionLoaderFactory);
         walletMenu.printMenu();
     }
 }

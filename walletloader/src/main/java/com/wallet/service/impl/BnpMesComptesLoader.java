@@ -2,6 +2,7 @@ package com.wallet.service.impl;
 
 import com.wallet.document.Category;
 import com.wallet.dto.TransactionDto;
+import com.wallet.entity.Transaction;
 import com.wallet.exceptions.TransactionsLoadException;
 import com.wallet.service.TransactionLoader;
 import com.wallet.service.TransactionService;
@@ -39,10 +40,12 @@ public class BnpMesComptesLoader implements TransactionLoader {
 
 
     //TODO for testing only
-    private static String FILE_NAME = "export_12_09_2017_10_34_07.xls";
+    private static String FILE_NAME = "export_03_11_2017_13_46_25.xls";
+//    private static String FILE_NAME = "export_12_09_2017_10_34_07.xls";
 
 //    @Value("${wallet.file.repository}")
-    private final static String FILES_PATH = "C:/Users/ebr3556/Desktop/Esteban/Documents/Personnel/transactiones/";
+    private final static String FILES_PATH = "C:\\Users\\esteban.bravo\\Downloads\\";
+//    private final static String FILES_PATH = "C:/Users/ebr3556/Desktop/Esteban/Documents/Personnel/transactiones/";
 
     @Autowired
     private TransactionService transactionService;
@@ -53,17 +56,21 @@ public class BnpMesComptesLoader implements TransactionLoader {
     }
 
     @Override
-    public List<TransactionDto> loadAndGetTransactions() throws TransactionsLoadException {
+    public List<Transaction> loadAndGetTransactions() throws TransactionsLoadException {
+//    public List<TransactionDto> loadAndGetTransactions() throws TransactionsLoadException {
         LOGGER.info("Loading...");
-        List<TransactionDto> transactionsRead = newArrayList();
-        List<TransactionDto> transactionsLoaded = newArrayList();
+        List<Transaction> transactionsRead = newArrayList();
+//        List<TransactionDto> transactionsRead = newArrayList();
+        List<Transaction> transactionsLoaded = newArrayList();
+//        List<TransactionDto> transactionsLoaded = newArrayList();
         //
         ExcelReader reader = new ExcelReader(FILES_PATH + FILE_NAME);
 
         List<Map<Integer, String>> transactionsFileContent = reader.getAllRowsContent(TRANSACTIONS_FIRST_ROW_INDEX);
         transactionsFileContent.forEach(content -> {
             if(content != null){
-                TransactionDto transformedTransaction = fromContentMapToTransactionDto(content);
+                Transaction transformedTransaction = fromContentMapToTransaction(content);
+//                TransactionDto transformedTransaction = fromContentMapToTransactionDto(content);
                 if(transformedTransaction != null){
                     transactionsRead.add(transformedTransaction);
                     transactionsLoaded.add(transactionService.insert(transformedTransaction));
@@ -96,6 +103,27 @@ public class BnpMesComptesLoader implements TransactionLoader {
         transactionDto.setAmount(transactionAmount);
 
         return transactionDto;
+    }
+
+    private Transaction fromContentMapToTransaction(Map<Integer, String> contentMap){
+        Transaction transaction = new Transaction();
+        if(contentMap.isEmpty()){
+            return null;
+        }
+
+        LocalDateTime transactionDate = getLocalDateTimeFromString(contentMap.get(DATE_COLUMN_INDEX), DATE_PATTERN);
+        transaction.setDate(transactionDate);
+
+        Category category = new Category();
+        category.setLabel(contentMap.get(CATEGORY_COLUMN_INDEX));
+        transaction.setCategory(category);
+
+        transaction.setLabel(contentMap.get(LABEL_COLUMN_INDEX));
+
+        BigDecimal transactionAmount = new BigDecimal(contentMap.get(AMOUNT_COLUMN_INDEX));
+        transaction.setAmount(transactionAmount);
+
+        return transaction;
     }
 
 }

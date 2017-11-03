@@ -4,6 +4,7 @@ import com.wallet.dto.TransactionDto;
 import com.wallet.entity.Transaction;
 import com.wallet.document.Category;
 import com.wallet.mapper.TransactionMapper;
+import com.wallet.repository.FakeRepository;
 import com.wallet.repository.TransactionRepository;
 import com.wallet.service.TransactionService;
 import fr.xebia.extras.selma.Selma;
@@ -23,7 +24,8 @@ import static com.google.common.collect.Lists.newArrayList;
 public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
-    private TransactionRepository transactionRepository;
+    private FakeRepository transactionRepository;
+//    private TransactionRepository transactionRepository;
 
     private TransactionMapper transactionMapper;
 
@@ -31,7 +33,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Transaction> findAllTransactions() {
         List<Transaction> transactions = transactionRepository.findAll();
-        transactions.forEach(t -> System.out.println(t.toString()));
+//        transactions.forEach(t -> System.out.println(t.toString()));
         return transactions;
     }
 
@@ -41,6 +43,11 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction t = null;
         t = transactionRepository.insert(transactionMapper.asTransaction(toInsert, t));
         return transactionMapper.asTransactionDto(t);
+    }
+
+    @Override
+    public Transaction insert(Transaction toInsert) {
+        return transactionRepository.insert(toInsert);
     }
 
     @Override

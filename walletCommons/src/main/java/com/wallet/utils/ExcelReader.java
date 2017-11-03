@@ -115,7 +115,8 @@ public class ExcelReader {
 
     public static void main(String[] args) {
 //        String path = "";
-        String path = "C:/Users/ebr3556/Desktop/Esteban/Documents/Personnel/transactiones/export_12_09_2017_10_34_07.xls";
+        String path = "C:\\Users\\esteban.bravo\\Downloads\\export_03_11_2017_13_46_25.xls";
+//        String path = "C:/Users/ebr3556/Desktop/Esteban/Documents/Personnel/transactiones/export_12_09_2017_10_34_07.xls";
         ExcelReader excelReader = new ExcelReader(path);
         excelReader.getRowContent(0);
         excelReader.getAllRowsContent(0);

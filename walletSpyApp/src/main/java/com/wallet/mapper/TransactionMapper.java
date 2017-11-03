@@ -9,7 +9,7 @@ import fr.xebia.extras.selma.Mapper;
  * Created by EBR3556 on 22/09/2017.
  */
 @Mapper( withCustomFields = {
-                @Field({"date", "fate"}),
+                @Field({"date", "date"}),
                 @Field({"category", "category"}),
                 @Field({"amount", "amount"}),
                 @Field({"userId", "userId"}),
