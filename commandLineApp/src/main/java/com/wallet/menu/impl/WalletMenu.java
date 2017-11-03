@@ -1,11 +1,8 @@
 package com.wallet.menu.impl;
 
 import com.wallet.entity.Transaction;
-import com.wallet.exceptions.TransactionLoaderNotImplementedException;
-import com.wallet.exceptions.TransactionsLoadException;
 import com.wallet.exceptions.WalletException;
 import com.wallet.menu.Menu;
-import com.wallet.service.TransactionLoader;
 import com.wallet.service.TransactionService;
 import com.wallet.service.factory.TransactionLoaderFactory;
 import com.wallet.utils.DateUtils;
@@ -17,7 +14,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
-import static com.wallet.service.factory.impl.TransactionLoaderFactoryImpl.LoaderType.BNP_MESCOMPTES;
 import static com.wallet.utils.DateUtils.DEFAULT_DATE_PATTERN;
 
 /**
@@ -86,7 +82,8 @@ public class WalletMenu extends Menu {
     protected void handleInput(String input) throws IOException, WalletException {
         switch (input) {
             case LOAD_TRANSACTIONS:
-                loadProcess();
+//                loadProcess();
+                showLoadMenu();
                 break;
             case LIST_ALL_TRANSACTIONS:
                 listAllTransactions();
@@ -101,6 +98,14 @@ public class WalletMenu extends Menu {
         }
     }
 
+    private void showLoadMenu() throws IOException, WalletException {
+        new LoadMenu.LoadMenuBuilder()
+                .setTransactionLoaderFactory(transactionLoaderFactory)
+                .setTransactionService(transactionService)
+                .build(this)
+                .printMenu();
+    }
+
     private void listTransactionsInRange() throws IOException, WalletException {
         LocalDate initDate = askForDate("Enter init date");
         LocalDate endDate = askForDate("Enter end date");
@@ -113,9 +118,9 @@ public class WalletMenu extends Menu {
     private LocalDate askForDate(String message) throws IOException {
         println(message);
         LocalDate date = null;
-        try{
+        try {
             date = DateUtils.getLocalDateFromString(br.readLine());
-        } catch (DateTimeParseException dte){
+        } catch (DateTimeParseException dte) {
             return askForDate(message);
         }
         return date;
@@ -130,29 +135,6 @@ public class WalletMenu extends Menu {
         println("List of all transactions:");
         List<Transaction> transactionList = transactionService.findAllTransactions();
         transactionList.forEach(transaction -> println(transaction.getTransactionResume()));
-    }
-
-    private void loadProcess() throws IOException, WalletException {
-        askForTransactionsPath();
-        loadTransactions();
-        printMenu();
-    }
-
-    private void askForTransactionsPath() throws IOException {
-        println("--------------------------------------------------------");
-        println("Enter transactions path:");
-        transactionsPath = br.readLine();
-        if (transactionsPath.isEmpty()) {
-            askForTransactionsPath();
-        }
-    }
-
-    private void loadTransactions() throws TransactionLoaderNotImplementedException, TransactionsLoadException {
-        println("Loading transactions from " + transactionsPath);
-        TransactionLoader loader = transactionLoaderFactory.getTransactionLoader(BNP_MESCOMPTES);
-        List<Transaction> transactionList = loader.loadAndGetTransactions();
-        int transactionsLoadedCount = transactionList != null ? transactionList.size() : 0;
-        println(transactionsLoadedCount + " transactions has been loaded");
     }
 
     public void setTransactionLoaderFactory(TransactionLoaderFactory transactionLoaderFactory) {
