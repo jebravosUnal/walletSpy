@@ -9,6 +9,7 @@ import com.wallet.utils.ExcelReader;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -39,16 +40,13 @@ public class BnpMesComptesLoader implements TransactionLoader {
     private static final int LABEL_COLUMN_INDEX = 2;
     private static final int AMOUNT_COLUMN_INDEX = 3;
 
-    private static String DATE_PATTERN = "dd-MM-yyyy";
+    private static final String DATE_PATTERN = "dd-MM-yyyy";
 
+    @Value("${wallet.loader.file.repository}")
+    private String filesPath;
+    @Value("${wallet.loader.file.transactionsTestFile}")
+    private String testFile;
 
-    //TODO for testing only
-//    private static String FILE_NAME = "export_03_11_2017_13_46_25.xls";
-    private static String FILE_NAME = "export_12_09_2017_10_34_07.xls";
-
-//    @Value("${wallet.file.repository}")
-//    private final static String FILES_PATH = "C:\\Users\\esteban.bravo\\Downloads\\";
-    private final static String FILES_PATH = "C:/Users/ebr3556/Desktop/Esteban/Documents/Personnel/transactiones/";
 
     @Autowired
     private TransactionService transactionService;
@@ -64,13 +62,14 @@ public class BnpMesComptesLoader implements TransactionLoader {
         List<Transaction> transactionsRead = newArrayList();
         List<Transaction> transactionsLoaded = newArrayList();
         //
-        ExcelReader reader = new ExcelReader(FILES_PATH + FILE_NAME);
+        ExcelReader reader = new ExcelReader(filesPath + testFile);
+//        ExcelReader reader = new ExcelReader(FILES_PATH + FILE_NAME);
 
         List<Map<Integer, String>> transactionsFileContent = reader.getAllRowsContent(TRANSACTIONS_FIRST_ROW_INDEX);
         transactionsFileContent.forEach(content -> {
-            if(content != null){
+            if (content != null) {
                 Transaction transformedTransaction = fromContentMapToTransaction(content);
-                if(transformedTransaction != null){
+                if (transformedTransaction != null) {
                     transactionsRead.add(transformedTransaction);
                     transactionService.insertIfDontExist(transformedTransaction).ifPresent(transaction -> transactionsLoaded.add(transaction));
 
@@ -84,10 +83,9 @@ public class BnpMesComptesLoader implements TransactionLoader {
     }
 
 
-
-    private Transaction fromContentMapToTransaction(Map<Integer, String> contentMap){
+    private Transaction fromContentMapToTransaction(Map<Integer, String> contentMap) {
         Transaction transaction = new Transaction();
-        if(contentMap.isEmpty()){
+        if (contentMap.isEmpty()) {
             return null;
         }
 
