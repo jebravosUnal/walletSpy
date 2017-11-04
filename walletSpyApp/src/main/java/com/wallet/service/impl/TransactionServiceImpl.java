@@ -59,7 +59,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Optional<Transaction> insertIfDontExist(Transaction transaction){
         if(transactionRepository.exists(transaction)){
-            LOGGER.info("Excluded -> " + transaction.getTransactionResume());
+            LOGGER.debug("Excluded -> " + transaction.getTransactionResume());
             return Optional.empty();
         } else {
             return Optional.of(insert(transaction));

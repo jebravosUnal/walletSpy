@@ -7,6 +7,10 @@ import java.io.IOException;
 
 public abstract class Menu {
 
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RESET = "\u001B[0m";
     protected BufferedReader br = null;
 
     protected final static String EXIT = "q";
@@ -21,9 +25,12 @@ public abstract class Menu {
         println("Not a valid option!! Select another one");
         printMenu();
     }
-
     public void println(String line){
-        System.out.println(line);
+        println(line, "");
+    }
+
+    public void println(String line, String color){
+        System.out.println(color + line + ANSI_RESET);
     }
 
     public void exit(int status){

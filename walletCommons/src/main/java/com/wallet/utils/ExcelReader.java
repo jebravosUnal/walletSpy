@@ -22,14 +22,20 @@ public class ExcelReader {
     private static final Logger LOGGER = LogManager.getLogger(ExcelReader.class);
 
     private Workbook book = null;
+    private String fileName = null;
     private String activeSheet = "";
     private int nbRows;
+
+    public String getFileName(){
+        return fileName;
+    }
 
     public ExcelReader(String filename) {
 
         try {
             if (filename.toUpperCase().endsWith(".XLS")) {
                 book = new HSSFWorkbook(new FileInputStream(filename));
+                fileName = filename;
             }
 
             if (activeSheet == null || activeSheet.isEmpty()) {

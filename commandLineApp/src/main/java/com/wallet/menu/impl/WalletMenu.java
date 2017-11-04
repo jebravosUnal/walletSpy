@@ -10,6 +10,7 @@ import com.wallet.utils.DateUtils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -82,7 +83,6 @@ public class WalletMenu extends Menu {
     protected void handleInput(String input) throws IOException, WalletException {
         switch (input) {
             case LOAD_TRANSACTIONS:
-//                loadProcess();
                 showLoadMenu();
                 break;
             case LIST_ALL_TRANSACTIONS:
@@ -110,9 +110,18 @@ public class WalletMenu extends Menu {
         LocalDate initDate = askForDate("Enter init date");
         LocalDate endDate = askForDate("Enter end date");
         List<Transaction> transactionList = transactionService.findTransactionsInDateRange(initDate, endDate);
-        transactionList.forEach(transaction -> println(transaction.getTransactionResume()));
-        //
+        listTransactions(transactionList);
         printMenu();
+    }
+
+    private void listTransactions(List<Transaction> transactionList){
+        transactionList.forEach(transaction -> {
+            if (transaction.getAmount().compareTo(BigDecimal.ZERO) > 0){
+                println(transaction.getTransactionResume(), Menu.ANSI_GREEN);
+            } else {
+                println(transaction.getTransactionResume(), Menu.ANSI_RED);
+            }
+        });
     }
 
     private LocalDate askForDate(String message) throws IOException {
@@ -134,7 +143,7 @@ public class WalletMenu extends Menu {
     private void listTransactions() {
         println("List of all transactions:");
         List<Transaction> transactionList = transactionService.findAllTransactions();
-        transactionList.forEach(transaction -> println(transaction.getTransactionResume()));
+        listTransactions(transactionList);
     }
 
     public void setTransactionLoaderFactory(TransactionLoaderFactory transactionLoaderFactory) {

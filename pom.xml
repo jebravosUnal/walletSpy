@@ -8,7 +8,7 @@
         <module>walletCommons</module>
         <module>walletloader</module>
         <module>commandLineApp</module>
-        <module>walletapi</module>
+        <!--<module>walletapi</module>-->
     </modules>
 
     <parent>

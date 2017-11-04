@@ -47,7 +47,6 @@ public class LoadMenu extends SubMenu {
         br = new BufferedReader(new InputStreamReader(System.in));
     }
 
-
     private final static String LOAD_TRANSACTIONS_FROM_HARDCODED = "1";
     private final static String LOAD_TRANSACTIONS_FROM_FOLDER = "2";
 
@@ -94,7 +93,9 @@ public class LoadMenu extends SubMenu {
     }
 
     private void loadProcessFromFolder() throws IOException, WalletException {
-        println("Not Implemented Yet");
+//        println("Not Implemented Yet");
+        String directory = askForTransactionsPath();
+        loadTransactionsFromDirectory(directory);
         printMenu();
     }
 
@@ -104,13 +105,23 @@ public class LoadMenu extends SubMenu {
         printMenu();
     }
 
-    private void askForTransactionsPath() throws IOException {
+    private String askForTransactionsPath() throws IOException {
         println("--------------------------------------------------------");
         println("Enter transactions path:");
-        transactionsPath = br.readLine();
+        String transactionsPath = br.readLine();
         if (transactionsPath.isEmpty()) {
-            askForTransactionsPath();
+            return askForTransactionsPath();
+        } else {
+            return transactionsPath;
         }
+    }
+
+    private void loadTransactionsFromDirectory(String directory) throws WalletException {
+        println("Loading transactions from " + directory);
+        TransactionLoader loader = transactionLoaderFactory.getTransactionLoader(BNP_MESCOMPTES);
+        List<Transaction> transactionList = loader.loadFromDirectoryAndGetTransactions(directory);
+        int transactionsLoadedCount = transactionList != null ? transactionList.size() : 0;
+        println(transactionsLoadedCount + " transactions has been loaded");
     }
 
     private void loadTransactions() throws TransactionLoaderNotImplementedException, TransactionsLoadException {
@@ -121,11 +132,11 @@ public class LoadMenu extends SubMenu {
         println(transactionsLoadedCount + " transactions has been loaded");
     }
 
-    public void setTransactionLoaderFactory(TransactionLoaderFactory transactionLoaderFactory) {
+    void setTransactionLoaderFactory(TransactionLoaderFactory transactionLoaderFactory) {
         this.transactionLoaderFactory = transactionLoaderFactory;
     }
 
-    public void setTransactionService(TransactionService transactionService) {
+    void setTransactionService(TransactionService transactionService) {
         this.transactionService = transactionService;
     }
 }
