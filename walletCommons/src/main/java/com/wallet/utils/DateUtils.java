@@ -19,8 +19,8 @@ public class DateUtils {
     }
 
     public static LocalDateTime getLocalDateTimeFromString(String stringDate, String pattern){
-        DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern(pattern);
-        LocalDate ld = LocalDate.parse(stringDate, DATEFORMATTER);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+        LocalDate ld = LocalDate.parse(stringDate, dateTimeFormatter);
         LocalDateTime ldt = LocalDateTime.of(ld, LocalDateTime.now().toLocalTime());
 //        System.out.println(ldt);
         return ldt;

@@ -1,6 +1,5 @@
 package com.wallet.service;
 
-import com.wallet.dto.TransactionDto;
 import com.wallet.entity.Transaction;
 import com.wallet.exceptions.TransactionsLoadException;
 

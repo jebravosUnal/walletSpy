@@ -4,6 +4,8 @@ import com.wallet.document.Category;
 import com.wallet.entity.Transaction;
 import com.wallet.repository.FakeRepository;
 import com.wallet.service.TransactionService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +13,15 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by EBR3556 on 12/09/2017.
  */
 @Service
 public class TransactionServiceImpl implements TransactionService {
+
+    private final static Logger LOGGER = LogManager.getLogger(TransactionServiceImpl.class);
 
     @Autowired
     private FakeRepository transactionRepository;
@@ -28,6 +33,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Transaction> findAllTransactions() {
         List<Transaction> transactions = transactionRepository.findAll();
+        transactions.sort(Transaction.orderByDate());
 //        transactions.forEach(t -> System.out.println(t.toString()));
         return transactions;
     }
@@ -48,6 +54,16 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction insert(Transaction toInsert) {
         return transactionRepository.insert(toInsert);
+    }
+
+    @Override
+    public Optional<Transaction> insertIfDontExist(Transaction transaction){
+        if(transactionRepository.exists(transaction)){
+            LOGGER.info("Excluded -> " + transaction.getTransactionResume());
+            return Optional.empty();
+        } else {
+            return Optional.of(insert(transaction));
+        }
     }
 
 //    @Override
@@ -75,7 +91,8 @@ public class TransactionServiceImpl implements TransactionService {
         t.setAmount(new BigDecimal(1000));
         t.setCategory(new Category());
         t.getCategory().setLabel("My category");
-        t.setDate(LocalDateTime.now());
+        t.setDate(LocalDate.now());
+//        t.setDate(LocalDateTime.now());
         transactionRepository.insert(t);
     }
 }

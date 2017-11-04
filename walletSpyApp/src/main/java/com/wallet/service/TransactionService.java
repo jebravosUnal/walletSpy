@@ -4,6 +4,7 @@ import com.wallet.entity.Transaction;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by EBR3556 on 12/09/2017.
@@ -40,6 +41,13 @@ public interface TransactionService {
 //     * @return
 //     */
 //    List<TransactionDto> insert(List<TransactionDto> toInsert);
+
+    /**
+     *
+     * @param transaction
+     * @return inserted transaction, null otherwise
+     */
+    Optional<Transaction> insertIfDontExist(Transaction transaction);
 
     void insertFakeTransaction();
 
