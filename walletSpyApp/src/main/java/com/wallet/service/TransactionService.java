@@ -1,5 +1,7 @@
 package com.wallet.service;
 
+import com.wallet.document.Category;
+import com.wallet.dto.DetailByCategory;
 import com.wallet.entity.Transaction;
 
 import java.time.LocalDate;
@@ -26,21 +28,9 @@ public interface TransactionService {
      */
     List<Transaction> findTransactionsInDateRange(LocalDate from, LocalDate to);
 
-    /**
-     *
-     * @param toInsert
-     * @return
-     */
-//    TransactionDto insert(TransactionDto toInsert);
+    List<DetailByCategory> getDetailByCategoryList();
 
     Transaction insert(Transaction toInsert);
-
-//    /**
-//     *
-//     * @param toInsert
-//     * @return
-//     */
-//    List<TransactionDto> insert(List<TransactionDto> toInsert);
 
     /**
      *
@@ -49,6 +39,6 @@ public interface TransactionService {
      */
     Optional<Transaction> insertIfDontExist(Transaction transaction);
 
-    void insertFakeTransaction();
+//    void insertFakeTransaction();
 
 }

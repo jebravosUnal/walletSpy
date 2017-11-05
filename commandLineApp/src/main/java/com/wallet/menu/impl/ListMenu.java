@@ -1,5 +1,6 @@
 package com.wallet.menu.impl;
 
+import com.wallet.dto.DetailByCategory;
 import com.wallet.entity.Transaction;
 import com.wallet.exceptions.WalletException;
 import com.wallet.menu.Menu;
@@ -22,6 +23,8 @@ public class ListMenu extends Menu {
 
     private final static String LIST_ALL_TRANSACTIONS = "1";
     private final static String LIST_TRANSACTIONS_IN_RANGE = "2";
+    private final static String LIST_CSV = "3";
+    private final static String LIST_DETAILS_BY_CATEGORY = "4";
 
     // Services
     private TransactionService transactionService;
@@ -37,6 +40,8 @@ public class ListMenu extends Menu {
         println("----------------------LIST MENU-----------------------");
         println("-- " + LIST_ALL_TRANSACTIONS + ". List All Transactions");
         println("-- " + LIST_TRANSACTIONS_IN_RANGE + ". List Transactions in date range (" + DEFAULT_DATE_PATTERN + ")");
+        println("-- " + LIST_CSV + ". List Transactions CSV");
+        println("-- " + LIST_DETAILS_BY_CATEGORY + ". List details by category");
         println("-- " + PREVIOUS + ". previous");
         println("-- " + EXIT + ". exit");
         println("--------------------------------------------------------");
@@ -53,11 +58,36 @@ public class ListMenu extends Menu {
             case LIST_TRANSACTIONS_IN_RANGE:
                 listTransactionsInRange();
                 break;
+            case LIST_CSV:
+                listCSV();
+                break;
+            case LIST_DETAILS_BY_CATEGORY:
+                listDetailsByCategory();
+                break;
+            case PREVIOUS:
+                printPreviousMenu();
+                break;
             case EXIT:
                 exit(NORMAL_EXIT_STATUTS);
             default:
                 printNotValidOption();
         }
+    }
+
+    private void listDetailsByCategory() throws IOException, WalletException {
+        List<DetailByCategory> details = transactionService.getDetailByCategoryList();
+        details.forEach(detailByCategory -> {
+            println("Category: " + detailByCategory.getCategory().getLabel()
+                    + " #Trans: " + detailByCategory.getTransactionList().size()
+                    + " total: " + detailByCategory.getTotalByCategory());
+        });
+        printMenu();
+    }
+
+    private void listCSV() throws IOException, WalletException {
+        List<Transaction> transactionList = transactionService.findAllTransactions();
+        listTransactionsCSV(transactionList);
+        printMenu();
     }
 
     private void listTransactionsInRange() throws IOException, WalletException {
@@ -74,6 +104,16 @@ public class ListMenu extends Menu {
                 println(transaction.getTransactionResume(), ANSI_GREEN);
             } else {
                 println(transaction.getTransactionResume(), ANSI_RED);
+            }
+        });
+    }
+
+    private void listTransactionsCSV(List<Transaction> transactionList) {
+        transactionList.forEach(transaction -> {
+            if (transaction.getAmount().compareTo(BigDecimal.ZERO) > 0) {
+                println(transaction.getTransactionForCSV(), ANSI_GREEN);
+            } else {
+                println(transaction.getTransactionForCSV(), ANSI_RED);
             }
         });
     }
