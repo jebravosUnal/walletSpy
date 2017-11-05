@@ -80,7 +80,7 @@ public class ListMenu extends Menu {
 
     private LocalDate askForDate(String message) throws IOException {
         println(message);
-        LocalDate date = null;
+        LocalDate date;
         try {
             date = DateUtils.getLocalDateFromString(readLine());
         } catch (DateTimeParseException dte) {

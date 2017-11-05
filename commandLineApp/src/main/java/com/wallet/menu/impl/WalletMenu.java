@@ -69,6 +69,7 @@ public class WalletMenu extends Menu {
     }
 
     private void showLoadMenu() throws IOException, WalletException {
-        new LoadMenu(this, transactionLoaderFactory, transactionService).printMenu();
+        new LoadMenu(this, transactionLoaderFactory).printMenu();
+//        new LoadMenu(this, transactionLoaderFactory, transactionService).printMenu();
     }
 }

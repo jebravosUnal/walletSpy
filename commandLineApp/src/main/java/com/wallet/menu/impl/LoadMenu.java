@@ -23,14 +23,13 @@ public class LoadMenu extends Menu {
 
     // Services
     private TransactionLoaderFactory transactionLoaderFactory;
-    private TransactionService transactionService;
+//    private TransactionService transactionService;
     // Attributes
-    private String transactionsPath = "";
 
-    public LoadMenu(Menu previousMenu, TransactionLoaderFactory transactionLoaderFactory, TransactionService transactionService) {
+    public LoadMenu(Menu previousMenu, TransactionLoaderFactory transactionLoaderFactory/*, TransactionService transactionService*/) {
         super(previousMenu);
         this.transactionLoaderFactory = transactionLoaderFactory;
-        this.transactionService = transactionService;
+//        this.transactionService = transactionService;
     }
 
     @Override
@@ -72,7 +71,7 @@ public class LoadMenu extends Menu {
     }
 
     private void loadProcessFromHardCoded() throws IOException, WalletException {
-        loadTransactions();
+        loadTransactionsFromHardCodedLocation();
         printMenu();
     }
 
@@ -95,8 +94,8 @@ public class LoadMenu extends Menu {
         println(transactionsLoadedCount + " transactions has been loaded");
     }
 
-    private void loadTransactions() throws TransactionLoaderNotImplementedException, TransactionsLoadException {
-        println("Loading transactions from " + transactionsPath);
+    private void loadTransactionsFromHardCodedLocation() throws TransactionLoaderNotImplementedException, TransactionsLoadException {
+//        println("Loading transactions from " + transactionsPath);
         TransactionLoader loader = transactionLoaderFactory.getTransactionLoader(BNP_MESCOMPTES);
         List<Transaction> transactionList = loader.loadAndGetTransactions();
         int transactionsLoadedCount = transactionList != null ? transactionList.size() : 0;
