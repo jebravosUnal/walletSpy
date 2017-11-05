@@ -1,33 +1,30 @@
 package com.wallet.menu.impl;
 
-import com.wallet.exceptions.TransactionLoaderNotImplementedException;
-import com.wallet.exceptions.TransactionsLoadException;
 import com.wallet.exceptions.WalletException;
 import com.wallet.menu.Menu;
-import com.wallet.menu.SubMenu;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
-public class SubMenuExample extends SubMenu {
+import static com.wallet.utils.ConsoleUtils.println;
+import static com.wallet.utils.ConsoleUtils.readLine;
+
+public class SubMenuExample extends Menu {
 
     private final static String PRINT_HELLO_WORLD = "1";
 
-    SubMenuExample(Menu previousMenu) {
+    public SubMenuExample(Menu previousMenu) {
         super(previousMenu);
-        br = new BufferedReader(new InputStreamReader(System.in));
     }
 
     @Override
     public void printMenu() throws IOException, WalletException {
-        System.out.println("--------------------------------------------------------");
-        System.out.println("------------------------SUBMENU-------------------------");
-        System.out.println("-- 1. print Hola mundo from submenu");
-        System.out.println("-- " + PREVIOUS + ". previous");
-        System.out.println("-- " + EXIT + ". exit");
-        System.out.println("--------------------------------------------------------");
-        String input = br.readLine();
+        println("--------------------------------------------------------");
+        println("------------------------SUBMENU-------------------------");
+        println("-- 1. print Hola mundo from submenu");
+        println("-- " + PREVIOUS + ". previous");
+        println("-- " + EXIT + ". exit");
+        println("--------------------------------------------------------");
+        String input = readLine();
         handleInput(input);
     }
 
@@ -49,7 +46,7 @@ public class SubMenuExample extends SubMenu {
     }
 
     private void printHelloWorld() throws IOException, WalletException {
-        System.out.println("Hello World from submenu!!!");
+        println("Hello World from submenu!!!");
         printMenu();
     }
 }

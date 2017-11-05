@@ -7,6 +7,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static com.wallet.utils.ConsoleUtils.println;
+import static com.wallet.utils.ConsoleUtils.readLine;
+
 public class InitialMenu extends Menu {
     private final static String PRINT_HELLO_WORLD = "1";
     private final static String GO_TO_SUBMENU = "2";
@@ -14,18 +17,18 @@ public class InitialMenu extends Menu {
 //    private Map<String, String> options = new HashMap<>();
 
     public InitialMenu() {
-        br = new BufferedReader(new InputStreamReader(System.in));
+//        br = new BufferedReader(new InputStreamReader(System.in));
     }
 
     @Override
     public void printMenu() throws IOException, WalletException {
-        System.out.println("--------------------------------------------------------");
-        System.out.println("---------------------------MENU-------------------------");
-        System.out.println("-- 1. print Hola mundo");
-        System.out.println("-- 2. subMenuExample");
-        System.out.println("-- " + EXIT + ". exit");
-        System.out.println("--------------------------------------------------------");
-        String input = br.readLine();
+        println("--------------------------------------------------------");
+        println("---------------------------MENU-------------------------");
+        println("-- 1. print Hola mundo");
+        println("-- 2. subMenuExample");
+        println("-- " + EXIT + ". exit");
+        println("--------------------------------------------------------");
+        String input = readLine();
         handleInput(input);
     }
 
@@ -46,7 +49,7 @@ public class InitialMenu extends Menu {
     }
 
     private void printHelloWorld() throws IOException, WalletException {
-        System.out.println("Hello World!!!");
+        println("Hello World!!!");
         printMenu();
 
     }

@@ -5,47 +5,18 @@ import com.wallet.exceptions.TransactionLoaderNotImplementedException;
 import com.wallet.exceptions.TransactionsLoadException;
 import com.wallet.exceptions.WalletException;
 import com.wallet.menu.Menu;
-import com.wallet.menu.SubMenu;
 import com.wallet.service.TransactionLoader;
 import com.wallet.service.TransactionService;
 import com.wallet.service.factory.TransactionLoaderFactory;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 
 import static com.wallet.service.factory.impl.TransactionLoaderFactoryImpl.LoaderType.BNP_MESCOMPTES;
+import static com.wallet.utils.ConsoleUtils.println;
+import static com.wallet.utils.ConsoleUtils.readLine;
 
-public class LoadMenu extends SubMenu {
-
-    public static class LoadMenuBuilder {
-
-        private TransactionLoaderFactory transactionLoaderFactory;
-        private TransactionService transactionService;
-
-        public LoadMenuBuilder setTransactionLoaderFactory(TransactionLoaderFactory transactionLoaderFactory) {
-            this.transactionLoaderFactory = transactionLoaderFactory;
-            return this;
-        }
-
-        public LoadMenuBuilder setTransactionService(TransactionService transactionService) {
-            this.transactionService = transactionService;
-            return this;
-        }
-
-        public LoadMenu build(Menu previousMenu) {
-            LoadMenu loadMenu = new LoadMenu(previousMenu);
-            loadMenu.setTransactionLoaderFactory(this.transactionLoaderFactory);
-            loadMenu.setTransactionService(this.transactionService);
-            return loadMenu;
-        }
-
-    }
-
-    {
-        br = new BufferedReader(new InputStreamReader(System.in));
-    }
+public class LoadMenu extends Menu {
 
     private final static String LOAD_TRANSACTIONS_FROM_HARDCODED = "1";
     private final static String LOAD_TRANSACTIONS_FROM_FOLDER = "2";
@@ -56,8 +27,10 @@ public class LoadMenu extends SubMenu {
     // Attributes
     private String transactionsPath = "";
 
-    public LoadMenu(Menu previousMenu) {
+    public LoadMenu(Menu previousMenu, TransactionLoaderFactory transactionLoaderFactory, TransactionService transactionService) {
         super(previousMenu);
+        this.transactionLoaderFactory = transactionLoaderFactory;
+        this.transactionService = transactionService;
     }
 
     @Override
@@ -69,7 +42,7 @@ public class LoadMenu extends SubMenu {
         println("-- " + PREVIOUS + ". previous");
         println("-- " + EXIT + ". exit");
         println("--------------------------------------------------------");
-        String input = br.readLine();
+        String input = readLine();
         handleInput(input);
     }
 
@@ -93,14 +66,12 @@ public class LoadMenu extends SubMenu {
     }
 
     private void loadProcessFromFolder() throws IOException, WalletException {
-//        println("Not Implemented Yet");
         String directory = askForTransactionsPath();
         loadTransactionsFromDirectory(directory);
         printMenu();
     }
 
     private void loadProcessFromHardCoded() throws IOException, WalletException {
-//        askForTransactionsPath();
         loadTransactions();
         printMenu();
     }
@@ -108,7 +79,7 @@ public class LoadMenu extends SubMenu {
     private String askForTransactionsPath() throws IOException {
         println("--------------------------------------------------------");
         println("Enter transactions path:");
-        String transactionsPath = br.readLine();
+        String transactionsPath = readLine();
         if (transactionsPath.isEmpty()) {
             return askForTransactionsPath();
         } else {
@@ -132,11 +103,4 @@ public class LoadMenu extends SubMenu {
         println(transactionsLoadedCount + " transactions has been loaded");
     }
 
-    void setTransactionLoaderFactory(TransactionLoaderFactory transactionLoaderFactory) {
-        this.transactionLoaderFactory = transactionLoaderFactory;
-    }
-
-    void setTransactionService(TransactionService transactionService) {
-        this.transactionService = transactionService;
-    }
 }

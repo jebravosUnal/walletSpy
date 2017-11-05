@@ -25,12 +25,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public void printMenu() throws IOException, WalletException {
-
-        Menu walletMenu  = new WalletMenu.WalletMenuBuilder()
-                .setTransactionLoaderFactory(transactionLoaderFactory)
-                .setTransactionService(transactionService)
-                .build();
-//        Menu walletMenu  = new WalletMenu(transactionLoaderFactory);
+        Menu walletMenu = new WalletMenu(transactionLoaderFactory, transactionService);
         walletMenu.printMenu();
     }
 }

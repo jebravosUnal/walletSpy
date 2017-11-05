@@ -13,11 +13,6 @@ import java.util.stream.Stream;
  */
 public class FileUtils {
 
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RESET = "\u001B[0m";
-
     public static int MAX_LEVEL_DEEP = Integer.MAX_VALUE;
     public static int MINIMUN_LEVEL_DEEP = Integer.MAX_VALUE;
 
@@ -51,8 +46,6 @@ public class FileUtils {
     }
 
     public static void main(String[] args) throws IOException {
-        System.out.println(ANSI_RED + "This text is red!" + ANSI_RESET);
-
 //        listFiles("C:/Users/ebr3556/Desktop/Esteban/Documents/Personnel/transactiones/");
 //        System.out.println("-------------------");
 //        try(Stream<Path> p = streamFilesPath("C:/Users/ebr3556/Desktop/Esteban/Documents/Personnel/transactiones/")){
