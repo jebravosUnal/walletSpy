@@ -46,7 +46,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<DetailByCategory> getDetailByCategoryList(){
+    public List<DetailByCategory> getDetailByCategoryList() {
         List<DetailByCategory> detailByCategories = newArrayList();
         List<Transaction> allTransactionsByUserId = transactionRepository.findAllByUserId("jebravos");
 
@@ -59,7 +59,7 @@ public class TransactionServiceImpl implements TransactionService {
             List<Transaction> transactionsByCategory = allTransactionsByUserId.stream()
                     .filter(transaction -> transaction.getCategory().equals(category))
                     .collect(Collectors.toList());
-            DetailByCategory  d = new DetailByCategory(category, transactionsByCategory);
+            DetailByCategory d = new DetailByCategory(category, transactionsByCategory);
             detailByCategories.add(d);
         });
 
@@ -67,19 +67,38 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Transaction insert(Transaction toInsert) {
-        return transactionRepository.insert(toInsert);
+    public Transaction save(Transaction toSave) {
+        return transactionRepository.save(toSave);
     }
 
     @Override
-    public Optional<Transaction> insertIfDontExist(Transaction transaction){
-        if(transactionRepository.findOne(Example.of(transaction)) != null){
-//        if(transactionRepository.exists(transaction)){
-            LOGGER.debug("Excluded -> " + transaction.getTransactionResume());
-            return Optional.empty();
+    public Optional<Transaction> insertOrUpdateCategoryIfExists(Transaction transaction) {
+        if (exist(transaction)) {
+            Transaction existent = findOne(transaction);
+            if (transaction.getCategory().isDefined() && !existent.getCategory().isDefined()) {
+                LOGGER.info("Updating category -> " + transaction.getTransactionResume());
+                existent.setCategory(transaction.getCategory());
+                return Optional.of(save(existent));
+            } else {
+                LOGGER.debug("Excluded -> " + transaction.getTransactionResume());
+                return Optional.empty();
+            }
         } else {
-            return Optional.of(insert(transaction));
+            return Optional.of(save(transaction));
         }
+    }
+
+    @Override
+    public boolean exist(Transaction transactionProbe) {
+        return findOne(transactionProbe) != null;
+//        return transactionRepository.findOne(Example.of(transactionProbe)) != null;
+    }
+
+    @Override
+    public Transaction findOne(Transaction transactionProbe) {
+        return transactionRepository.findOne(transactionProbe.getExample());
+//        return transactionRepository.findOne(Example.of(transactionProbe));
+
     }
 
 //    public void insertFakeTransaction() {

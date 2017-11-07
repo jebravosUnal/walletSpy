@@ -93,7 +93,7 @@ public class BnpMesComptesLoader implements TransactionLoader {
                 Transaction transformedTransaction = fromContentMapToTransaction(content);
                 if (transformedTransaction != null) {
                     transactionsRead.add(transformedTransaction);
-                    transactionService.insertIfDontExist(transformedTransaction).ifPresent(transaction -> transactionsLoaded.add(transaction));
+                    transactionService.insertOrUpdateCategoryIfExists(transformedTransaction).ifPresent(transaction -> transactionsLoaded.add(transaction));
 
                 }
             }

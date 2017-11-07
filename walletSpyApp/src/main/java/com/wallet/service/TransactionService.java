@@ -30,14 +30,23 @@ public interface TransactionService {
 
     List<DetailByCategory> getDetailByCategoryList();
 
-    Transaction insert(Transaction toInsert);
+    /**
+     * It will upsert the entity
+     * @param toSave
+     * @return
+     */
+    Transaction save(Transaction toSave);
 
     /**
      *
      * @param transaction
      * @return inserted transaction, null otherwise
      */
-    Optional<Transaction> insertIfDontExist(Transaction transaction);
+    Optional<Transaction> insertOrUpdateCategoryIfExists(Transaction transaction);
+
+    boolean exist(Transaction transactionProbe);
+
+    Transaction findOne(Transaction transactionProbe);
 
 //    void insertFakeTransaction();
 

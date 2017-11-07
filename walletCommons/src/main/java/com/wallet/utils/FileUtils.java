@@ -37,7 +37,7 @@ public class FileUtils {
 
     public static List<Path> getPathList(String path, int maxDeep) throws IOException {
         try(Stream<Path> paths = streamFilesPath(path, maxDeep)){
-            return paths.collect(Collectors.toList());
+                return paths.collect(Collectors.toList());
         }
     }
 
