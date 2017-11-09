@@ -2,6 +2,7 @@ package com.wallet.service;
 
 import com.wallet.document.Category;
 import com.wallet.dto.DetailByCategory;
+import com.wallet.dto.DetailByGroup;
 import com.wallet.entity.Transaction;
 
 import java.time.LocalDate;
@@ -47,6 +48,8 @@ public interface TransactionService {
     boolean exist(Transaction transactionProbe);
 
     Transaction findOne(Transaction transactionProbe);
+
+    List<DetailByGroup> getDetailsByMatchingRulesGroups();
 
 //    void insertFakeTransaction();
 

@@ -1,10 +1,12 @@
 package com.wallet.menu.impl;
 
 import com.wallet.dto.DetailByCategory;
+import com.wallet.dto.DetailByGroup;
 import com.wallet.entity.Transaction;
 import com.wallet.exceptions.WalletException;
 import com.wallet.menu.Menu;
 import com.wallet.service.TransactionService;
+import com.wallet.utils.ConsoleUtils;
 import com.wallet.utils.DateUtils;
 
 import java.io.IOException;
@@ -25,6 +27,7 @@ public class ListMenu extends Menu {
     private final static String LIST_TRANSACTIONS_IN_RANGE = "2";
     private final static String LIST_CSV = "3";
     private final static String LIST_DETAILS_BY_CATEGORY = "4";
+    private final static String LIST_DETAILS_BY_GROUPS = "5";
 
     // Services
     private TransactionService transactionService;
@@ -42,6 +45,7 @@ public class ListMenu extends Menu {
         println("-- " + LIST_TRANSACTIONS_IN_RANGE + ". List Transactions in date range (" + DEFAULT_DATE_PATTERN + ")");
         println("-- " + LIST_CSV + ". List Transactions CSV");
         println("-- " + LIST_DETAILS_BY_CATEGORY + ". List details by category");
+        println("-- " + LIST_DETAILS_BY_GROUPS + ". List details by group");
         println("-- " + PREVIOUS + ". previous");
         println("-- " + EXIT + ". exit");
         println("--------------------------------------------------------");
@@ -64,6 +68,9 @@ public class ListMenu extends Menu {
             case LIST_DETAILS_BY_CATEGORY:
                 listDetailsByCategory();
                 break;
+            case LIST_DETAILS_BY_GROUPS:
+                listDetailsByGroups();
+                break;
             case PREVIOUS:
                 printPreviousMenu();
                 break;
@@ -72,6 +79,17 @@ public class ListMenu extends Menu {
             default:
                 printNotValidOption();
         }
+    }
+
+    private void listDetailsByGroups() throws IOException, WalletException {
+        List<DetailByGroup> details = transactionService.getDetailsByMatchingRulesGroups();
+        details.forEach(group -> {
+            if(group.getTransactionList().size() > 1){
+                println("Pattern: " + group.getLabelMatched(), ConsoleUtils.ANSI_GREEN);
+                group.getTransactionList().forEach(transaction -> println(transaction.getShortTransactionResume()));
+            }
+        });
+        printMenu();
     }
 
     private void listDetailsByCategory() throws IOException, WalletException {

@@ -153,6 +153,15 @@ public class Transaction extends LabeledEntity {
                 + (this.getUserId() != null ? " userId : " + this.getUserId() + " - " : "");
     }
 
+    public String getShortTransactionResume() {
+        return "" + (this.getId() != null ? this.getId() + " - " : "")
+                + (this.getDate() != null ? this.getDate() + " - " : "")
+                + (this.getLabel() != null ? this.getLabel() + " - " : "")
+                + (this.getAmount() != null ? this.getAmount() + " - " : "")
+                + (this.getCategory() != null ? this.getCategory().getLabel() + " - " : "")
+                + (this.getUserId() != null ? this.getUserId() + " - " : "");
+    }
+
     public String getTransactionForCSV() {
         return "" + (this.getId() != null ? this.getId() + ";" : ";")
                 + (this.getDate() != null ? this.getDate() + ";" : ";")
