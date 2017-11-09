@@ -19,11 +19,11 @@ import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Sets.newHashSet;
 import static com.wallet.utils.DateUtils.getLocalDateFromString;
 import static com.wallet.utils.FileUtils.MINIMUN_LEVEL_DEEP;
 
@@ -66,22 +66,27 @@ public class BnpMesComptesLoader implements TransactionLoader {
 
     @Override
     public List<Transaction> loadFromDirectoryAndGetTransactions(String directory) throws WalletException {
-        List<Transaction> transactionsLoaded = newArrayList();
+        Set<Transaction> transactionsLoadedSet = newHashSet();
 
         try {
-            try(Stream<Path> files = FileUtils.streamFilesPath(directory, MINIMUN_LEVEL_DEEP)){
-                       files.forEach(path -> {
-                           transactionsLoaded.addAll(loadFromPathAndGetTransactions(path));
-                       });
+            try (Stream<Path> files = FileUtils.streamFilesPath(directory, MINIMUN_LEVEL_DEEP)) {
+                files.forEach(path -> {
+                    /* Here we add to a set, in order to remove duplicates. That is to not count twice the transactions that
+                     * were first loaded and updated them.
+                     * See: Transaction.toEquals to see equals criteria
+                     * */
+                    transactionsLoadedSet.addAll(loadFromPathAndGetTransactions(path));
+
+                });
             }
         } catch (IOException e) {
             throw new WalletException("An error was ocurred reading files from directory " + directory);
         }
 
-        return transactionsLoaded;
+        return newArrayList(transactionsLoadedSet);
     }
 
-    private List<Transaction> loadFromPathAndGetTransactions(Path path){
+    private List<Transaction> loadFromPathAndGetTransactions(Path path) {
         ExcelReader reader = new ExcelReader(path.toString());
         LOGGER.info("Loading from  " + reader.getFileName());
         List<Transaction> transactionsRead = newArrayList();
@@ -93,8 +98,8 @@ public class BnpMesComptesLoader implements TransactionLoader {
                 Transaction transformedTransaction = fromContentMapToTransaction(content);
                 if (transformedTransaction != null) {
                     transactionsRead.add(transformedTransaction);
-                    transactionService.insertOrUpdateCategoryIfExists(transformedTransaction).ifPresent(transaction -> transactionsLoaded.add(transaction));
-
+                    transactionService.insertOrUpdateCategoryIfExists(transformedTransaction)
+                            .ifPresent(transactionsLoaded::add);
                 }
             }
         });
